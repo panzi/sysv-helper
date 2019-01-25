@@ -39,7 +39,9 @@ while [ : ]; do
 	if [[ $(( ( (STATUS & 0x7f) + 1) >> 1 )) -gt 0 ]]; then
 		SIGNAL=$(( STATUS & 0x7f ))
 		echo "Exit-Signal: $SIGNAL"
-		exit
+		if [[ $RESTART != RESTART ]] || [[ $SIGNAL -eq 15 ]] || [[ $SIGNAL -eq 9 ]]; then
+			exit
+		fi
 	fi
 
 	if [[ $STATUS -eq 127 ]]; then
